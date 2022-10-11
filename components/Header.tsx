@@ -6,6 +6,7 @@ import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/solid'
 
 const navigation = [
   {name: 'Główna', href: '/'},
+  {name: 'Produkty', href: '/products'},
   {name: 'O nas', href: '/about'},
 ]
 
