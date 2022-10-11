@@ -27,11 +27,13 @@ export const Header = () => {
                   <Link
                     href="/"
                   >
-                    <img
-                      className="h-8 w-8 rounded-lg"
-                      src="https://github.com/aaqu.png"
-                      alt="logo Aaqu"
-                    />
+                    <a>
+                      <img
+                        className="h-8 w-8 rounded-lg"
+                        src="https://github.com/aaqu.png"
+                        alt="logo Aaqu"
+                      />
+                    </a>
                   </Link>
                 </div>
                 <div className="hidden md:block">
