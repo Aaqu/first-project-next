@@ -60,7 +60,6 @@ export const Header = () => {
                   </div>
                 </div>
               </div>
-
               <div className="-mr-2 flex md:hidden">
                 {/* Mobile menu button */}
                 <Disclosure.Button
@@ -86,7 +85,9 @@ export const Header = () => {
                 >
                   <a
                     className={classNames(
-                      router.pathname === item.href ? 'bg-emerald-900 text-white' : 'text-gray-300 hover:bg-emerald-700 hover:text-white',
+                      router.pathname === item.href
+                        ? 'bg-emerald-900 text-white'
+                        : 'text-white hover:bg-emerald-700 hover:text-white',
                       'block px-3 py-2 rounded-md text-base font-medium'
                     )}
                     aria-current={router.pathname === item.href ? 'page' : undefined}
