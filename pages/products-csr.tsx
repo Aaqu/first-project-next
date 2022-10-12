@@ -1,5 +1,5 @@
 import {useQuery} from "react-query";
-import {Product} from "../components/Product";
+import {ProductDetails} from "../components/ProductDetails";
 import {Layout} from "../components/Layout";
 
 export interface StoreApiResponse {
@@ -37,7 +37,7 @@ export default function ProductsPage() {
       <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {data.map(product => {
           return <li key={product.id} className="shadow-xl border-2">
-            <Product
+            <ProductDetails
               data={{
                 title: product.title,
                 description: product.description,

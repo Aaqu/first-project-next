@@ -2,7 +2,7 @@ import { Header } from "../components/Header";
 import { Main } from "../components/Main";
 import { Footer } from "../components/Footer";
 import { InferGetStaticPropsType } from "next";
-import {Product} from "../components/Product";
+import {ProductListItem} from "../components/ProductDetails";
 
 export default function ProductsPage({ data }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
@@ -12,13 +12,11 @@ export default function ProductsPage({ data }: InferGetStaticPropsType<typeof ge
         <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {data.map(product => {
             return <li key={product.id} className="shadow-xl border-2">
-              <Product
+              <ProductListItem
                 data={{
                   title: product.title,
-                  description: product.description,
                   thumbnailUrl: product.image,
                   thumbnailAlt: product.title,
-                  rating: product.rating.rate,
                 }}
               />
             </li>
