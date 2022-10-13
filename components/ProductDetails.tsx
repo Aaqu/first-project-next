@@ -1,6 +1,8 @@
 import {Rating} from "./Rating";
+import Link from "next/link";
 
 interface ProductDetails {
+  id: number;
   title: string;
   description: string;
   thumbnailUrl: string;
@@ -23,7 +25,7 @@ export const ProductDetails = ({data}: ProductDetailsProps) => {
   );
 };
 
-type ProductListItem = Pick<ProductDetails, "title" | "thumbnailUrl" | "thumbnailAlt">;
+type ProductListItem = Pick<ProductDetails, "id" | "title" | "thumbnailUrl" | "thumbnailAlt">;
 
 interface ProductListItemProps {
   data: ProductListItem;
@@ -33,7 +35,11 @@ export const ProductListItem = ({data}: ProductListItemProps) => {
   return (
     <>
       <img src={data.thumbnailUrl} alt={data.thumbnailAlt}/>
-      <h2 className="p-4 text-3xl font-bold">{data.title}</h2>
+        <Link href={`/products/${data.id}`}>
+          <a>
+            <h2 className="p-4 text-3xl font-bold">{data.title}</h2>
+          </a>
+        </Link>
     </>
   );
 };
