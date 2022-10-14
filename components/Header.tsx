@@ -3,6 +3,7 @@ import {useRouter} from "next/router";
 
 import {Disclosure} from '@headlessui/react'
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/solid'
+import Image from "next/image";
 
 const navigation = [
   {name: 'Główna', href: '/'},
@@ -25,15 +26,18 @@ export const Header = () => {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 w-8 h-8">
                   <Link
                     href="/"
                   >
                     <a>
-                      <img
+                      <Image
                         className="h-8 w-8 rounded-lg"
                         src="https://github.com/aaqu.png"
                         alt="logo Aaqu"
+                        layout="responsive"
+                        width={1}
+                        height={1}
                       />
                     </a>
                   </Link>
