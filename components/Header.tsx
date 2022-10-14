@@ -38,6 +38,7 @@ export const Header = () => {
                         layout="responsive"
                         width={1}
                         height={1}
+                        quality={100}
                       />
                     </a>
                   </Link>
