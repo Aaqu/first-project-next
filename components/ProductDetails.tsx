@@ -1,4 +1,5 @@
 import {Rating} from "./Rating";
+import Image from "next/image";
 import Link from "next/link";
 
 interface ProductDetails {
@@ -17,8 +18,17 @@ interface ProductDetailsProps {
 export const ProductDetails = ({data}: ProductDetailsProps) => {
   return (
     <>
-      <img src={data.thumbnailUrl} alt={data.thumbnailAlt}/>
-      <h2 className="p-4 text-3xl font-bold">{data.title}</h2>
+      <div className="bg-white p-8">
+        <Image
+          src={data.thumbnailUrl}
+          alt={data.thumbnailAlt}
+          layout="responsive"
+          width={16}
+          height={9}
+          objectFit="contain"
+        />
+      </div>
+      <h2 className="p-4 text-xl font-bold">{data.title}</h2>
       <p className="p-4">{data.description}</p>
       <Rating rating={data.rating}/>
     </>
@@ -34,12 +44,23 @@ interface ProductListItemProps {
 export const ProductListItem = ({data}: ProductListItemProps) => {
   return (
     <>
-      <img src={data.thumbnailUrl} alt={data.thumbnailAlt}/>
-        <Link href={`/products/${data.id}`}>
-          <a>
-            <h2 className="p-4 text-3xl font-bold">{data.title}</h2>
-          </a>
-        </Link>
+      <div className="bg-white p-2">
+        <Image
+          src={data.thumbnailUrl}
+          alt={data.thumbnailAlt}
+          layout="responsive"
+          width={16}
+          height={9}
+          objectFit="contain"
+          quality={50}
+        />
+      </div>
+
+      <Link href={`/products/${data.id}`}>
+        <a>
+          <h2 className="p-4 text-xl font-bold">{data.title}</h2>
+        </a>
+      </Link>
     </>
   );
 };
