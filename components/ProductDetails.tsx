@@ -2,6 +2,7 @@ import {Rating} from "./Rating";
 import Image from "next/image";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import Head from "next/head";
 
 interface ProductDetails {
   id: number;
@@ -21,6 +22,9 @@ export const ProductDetails = ({data}: ProductDetailsProps) => {
   return (
     <>
       <div className="bg-white p-8">
+        <Head>
+          <title>{data.title}</title>
+        </Head>
         <Image
           src={data.thumbnailUrl}
           alt={data.thumbnailAlt}
