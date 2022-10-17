@@ -1,15 +1,14 @@
-import {GetStaticPaths, GetStaticPathsResult, GetStaticPropsContext, InferGetStaticPropsType} from "next";
-import {Layout} from "../../components/Layout";
+import {InferGetStaticPropsType} from "next";
 import {ProductDetails} from "../../components/ProductDetails";
 import Link from "next/link";
 
 export default function ProductIdPAge({data}: InferGetStaticPropsType<typeof getStaticProps>) {
   if (!data) {
-    return <Layout>Coś poszło nie tak...</Layout>
+    return <div>Coś poszło nie tak...</div>
   }
 
   return (
-    <Layout>
+    <>
       <Link href="/products">
         <a>Wróć</a>
       </Link>
@@ -21,7 +20,8 @@ export default function ProductIdPAge({data}: InferGetStaticPropsType<typeof get
         thumbnailAlt: data.title,
         rating: data.rating.rate,
       }}/>
-    </Layout>
+    </>
+
   );
 };
 

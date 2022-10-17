@@ -1,6 +1,3 @@
-import {Header} from "../components/Header";
-import {Footer} from "../components/Footer";
-import {Main} from "../components/Main";
 import {ProductDetails} from "../components/ProductDetails";
 
 const DATA = {
@@ -14,12 +11,6 @@ const DATA = {
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <Main>
-        <ProductDetails data={DATA}/>
-      </Main>
-      <Footer />
-    </div>
-  )
+    <ProductDetails data={DATA}/>
+  );
 }
