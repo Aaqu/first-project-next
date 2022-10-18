@@ -1,10 +1,11 @@
 import {Rating} from "./Rating";
 import Image from "next/image";
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
-import Head from "next/head";
+import { NextSeo } from 'next-seo';
+import {AaquReactMarkdown} from "./AaquReactMarkdown";
+import {MarkdownResult} from "../types";
 
-interface ProductDetails {
+interface Product {
   id: number;
   title: string;
   price: number;
@@ -13,19 +14,34 @@ interface ProductDetails {
   thumbnailUrl: string;
   thumbnailAlt: string;
   rating: number;
-  longDescription: string;
+  longDescription: MarkdownResult;
 }
 
 interface ProductDetailsProps {
-  data: ProductDetails;
+  data: Product;
 }
 
 export const ProductDetails = ({data}: ProductDetailsProps) => {
   return (
     <>
-      <Head>
-        <title>{data.title}</title>
-      </Head>
+      <NextSeo
+        title={data.title}
+        description={data.description}
+        canonical={`https://first-project-next-aaqu.vercel.app/products/${data.id}`}
+        openGraph={{
+          url: `https://first-project-next-aaqu.vercel.app/products/${data.id}`,
+          title: data.title,
+          description: data.description,
+          images: [
+            {
+              url: data.thumbnailUrl,
+              alt: data.thumbnailAlt,
+              type: 'image/jpeg',
+            },
+          ],
+          site_name: 'First-Project-Next',
+        }}
+      />
       <div className="pt-7 px-4 text-gray-500">{data.category}</div>
       <h2 className="px-4 pb-4 text-xl font-bold">{data.title}</h2>
       <div className="bg-white p-8">
@@ -42,7 +58,9 @@ export const ProductDetails = ({data}: ProductDetailsProps) => {
       <Rating rating={data.rating}/>
       <p className="p-4">{data.description}</p>
       <article className="p-4 prose lg:prose-lg">
-        <ReactMarkdown>{data.longDescription}</ReactMarkdown>
+        <AaquReactMarkdown>
+          {data.longDescription}
+        </AaquReactMarkdown>
       </article>
 
 
@@ -50,7 +68,7 @@ export const ProductDetails = ({data}: ProductDetailsProps) => {
   );
 };
 
-type ProductListItem = Pick<ProductDetails, "id" | "title" | "price" | "category" | "thumbnailUrl" | "thumbnailAlt">;
+type ProductListItem = Pick<Product, "id" | "title" | "price" | "category" | "thumbnailUrl" | "thumbnailAlt">;
 
 interface ProductListItemProps {
   data: ProductListItem;

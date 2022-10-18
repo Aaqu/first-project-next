@@ -1,4 +1,4 @@
-import { ProductListItem} from "../components/ProductDetails";
+import { ProductListItem} from "../components/Product";
 import {InferGetStaticPropsType} from "next";
 
 export default function Home({dataNew, dataSale}: InferGetStaticPropsType<typeof getStaticProps>) {

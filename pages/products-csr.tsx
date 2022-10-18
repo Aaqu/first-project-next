@@ -1,5 +1,5 @@
 import {useQuery} from "react-query";
-import {ProductListItem} from "../components/ProductDetails";
+import {ProductListItem} from "../components/Product";
 
 export interface StoreApiResponse {
   id: number;
