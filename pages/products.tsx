@@ -10,6 +10,8 @@ export default function ProductsPage({data}: InferGetStaticPropsType<typeof getS
             data={{
               id: product.id,
               title: product.title,
+              price: product.price,
+              category: product.category,
               thumbnailUrl: product.image,
               thumbnailAlt: product.title,
             }}
@@ -21,7 +23,7 @@ export default function ProductsPage({data}: InferGetStaticPropsType<typeof getS
 }
 
 export const getStaticProps = async () => {
-  const res = await fetch(`https://naszsklep-api.vercel.app/api/products/`);
+  const res = await fetch(`https://naszsklep-api.vercel.app/api/products?take=24&offset=0`);
   const data: StoreApiResponse[] = await res.json();
 
   return {

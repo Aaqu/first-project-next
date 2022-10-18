@@ -7,6 +7,8 @@ import Head from "next/head";
 interface ProductDetails {
   id: number;
   title: string;
+  price: number;
+  category: string;
   description: string;
   thumbnailUrl: string;
   thumbnailAlt: string;
@@ -45,7 +47,7 @@ export const ProductDetails = ({data}: ProductDetailsProps) => {
   );
 };
 
-type ProductListItem = Pick<ProductDetails, "id" | "title" | "thumbnailUrl" | "thumbnailAlt">;
+type ProductListItem = Pick<ProductDetails, "id" | "title" | "price" | "category" | "thumbnailUrl" | "thumbnailAlt">;
 
 interface ProductListItemProps {
   data: ProductListItem;
@@ -54,7 +56,7 @@ interface ProductListItemProps {
 export const ProductListItem = ({data}: ProductListItemProps) => {
   return (
     <>
-      <div className="bg-white p-2">
+      <div className="bg-white p-4">
         <Image
           src={data.thumbnailUrl}
           alt={data.thumbnailAlt}
@@ -66,9 +68,15 @@ export const ProductListItem = ({data}: ProductListItemProps) => {
         />
       </div>
 
+      <div className="text-xl pt-4 pl-4">
+        {data.price}$
+      </div>
+
+      <div className="pt-4 px-4 text-gray-500">{data.category}</div>
+
       <Link href={`/products/${data.id}`}>
         <a>
-          <h2 className="p-4 text-xl font-bold">{data.title}</h2>
+          <h3 className="px-4 pb-4 text-lg h-24">{data.title}</h3>
         </a>
       </Link>
     </>

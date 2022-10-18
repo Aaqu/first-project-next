@@ -1,5 +1,5 @@
 import {useQuery} from "react-query";
-import {ProductDetails} from "../components/ProductDetails";
+import {ProductListItem} from "../components/ProductDetails";
 
 export interface StoreApiResponse {
   id: number;
@@ -12,10 +12,11 @@ export interface StoreApiResponse {
     rate: number;
     count: number;
   }
+  longDescription: string;
 }
 
 const getProducts = async () => {
-  const res = await fetch(`https://naszsklep-api.vercel.app/api/products/`);
+  const res = await fetch(`https://naszsklep-api.vercel.app/api/products?take=24&offset=0`);
   const data: StoreApiResponse[] = await res.json();
   return data;
 };
@@ -35,14 +36,14 @@ export default function ProductsPage() {
     <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
       {data.map(product => {
         return <li key={product.id} className="shadow-xl border-2">
-          <ProductDetails
+          <ProductListItem
             data={{
               id: product.id,
               title: product.title,
-              description: product.description,
+              price: product.price,
+              category: product.category,
               thumbnailUrl: product.image,
               thumbnailAlt: product.title,
-              rating: product.rating.rate,
             }}
           />
         </li>
