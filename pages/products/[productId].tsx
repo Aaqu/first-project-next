@@ -15,6 +15,8 @@ export default function ProductIdPAge({data}: InferGetStaticPropsType<typeof get
       <ProductDetails data={{
         id: data.id,
         title: data.title,
+        price: data.price,
+        category: data.category,
         description: data.description,
         thumbnailUrl: data.image,
         thumbnailAlt: data.title,

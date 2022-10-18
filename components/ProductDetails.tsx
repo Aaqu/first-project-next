@@ -23,10 +23,12 @@ interface ProductDetailsProps {
 export const ProductDetails = ({data}: ProductDetailsProps) => {
   return (
     <>
+      <Head>
+        <title>{data.title}</title>
+      </Head>
+      <div className="pt-7 px-4 text-gray-500">{data.category}</div>
+      <h2 className="px-4 pb-4 text-xl font-bold">{data.title}</h2>
       <div className="bg-white p-8">
-        <Head>
-          <title>{data.title}</title>
-        </Head>
         <Image
           src={data.thumbnailUrl}
           alt={data.thumbnailAlt}
@@ -36,13 +38,14 @@ export const ProductDetails = ({data}: ProductDetailsProps) => {
           objectFit="contain"
         />
       </div>
-      <h2 className="p-4 text-xl font-bold">{data.title}</h2>
+      <div className="text-3xl p-4">{data.price}$</div>
+      <Rating rating={data.rating}/>
       <p className="p-4">{data.description}</p>
       <article className="p-4 prose lg:prose-lg">
         <ReactMarkdown>{data.longDescription}</ReactMarkdown>
       </article>
 
-      <Rating rating={data.rating}/>
+
     </>
   );
 };
