@@ -4,6 +4,7 @@ import {useRouter} from "next/router";
 import {Disclosure} from '@headlessui/react'
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/solid'
 import Image from "next/image";
+import {CartBar} from "./Cart/CartBar";
 
 const navigation = [
   {name: 'Główna', href: '/'},
@@ -26,7 +27,7 @@ export const Header = () => {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
-                <div className="flex-shrink-0 w-8 h-8">
+                <div className="w-8 h-8">
                   <Link
                     href="/"
                   >
@@ -43,7 +44,7 @@ export const Header = () => {
                     </a>
                   </Link>
                 </div>
-                <div className="hidden md:block">
+                <div className="md:flex flex-row justify-between hidden">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {navigation.map((item) => (
                       <Link
@@ -79,6 +80,7 @@ export const Header = () => {
                   )}
                 </Disclosure.Button>
               </div>
+              <CartBar />
             </div>
           </div>
 

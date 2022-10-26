@@ -1,9 +1,10 @@
 import {Rating} from "./Rating";
 import Image from "next/image";
 import Link from "next/link";
-import { NextSeo } from 'next-seo';
+import {NextSeo} from 'next-seo';
 import {AaquReactMarkdown} from "./AaquReactMarkdown";
 import {MarkdownResult} from "../types";
+import {useCartState} from "./Cart/CartContext";
 
 interface Product {
   id: number;
@@ -75,31 +76,45 @@ interface ProductListItemProps {
 }
 
 export const ProductListItem = ({data}: ProductListItemProps) => {
+  const cartState = useCartState();
   return (
-    <>
-      <div className="bg-white p-4">
-        <Image
-          src={data.thumbnailUrl}
-          alt={data.thumbnailAlt}
-          layout="responsive"
-          width={16}
-          height={9}
-          objectFit="contain"
-          quality={50}
-        />
-      </div>
+    <Link href={`/products/${data.id}`}>
+      <a>
+        <div className="bg-white p-4">
+          <Image
+            src={data.thumbnailUrl}
+            alt={data.thumbnailAlt}
+            layout="responsive"
+            width={16}
+            height={9}
+            objectFit="contain"
+            quality={50}
+          />
+        </div>
 
-      <div className="text-xl pt-4 pl-4">
-        {data.price}$
-      </div>
+        <div className="text-xl pt-4 pl-4">
+          {data.price}$
+        </div>
 
-      <div className="pt-4 px-4 text-gray-500">{data.category}</div>
-
-      <Link href={`/products/${data.id}`}>
-        <a>
-          <h3 className="px-4 pb-4 text-lg h-24">{data.title}</h3>
-        </a>
-      </Link>
-    </>
+        <div className="pt-4 px-4 text-gray-500">{data.category}</div>
+        <div className="p-4">
+          <h3 className="pb-4 text-lg h-24">{data.title}</h3>
+          <button
+            className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+            onClick={(e) => {
+              e.preventDefault()
+              cartState.addItemToCard({
+                id: data.id,
+                title: data.title,
+                price: data.price,
+                count: 1
+              })
+            }}
+          >
+            Dodaj do koszyka
+          </button>
+        </div>
+      </a>
+    </Link>
   );
 };
