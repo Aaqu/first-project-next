@@ -7,10 +7,9 @@ import {MarkdownResult} from "../types";
 import {useCartState} from "./Cart/CartContext";
 
 interface Product {
-  id: number;
+  id: string;
   title: string;
   price: number;
-  category: string;
   description: string;
   thumbnailUrl: string;
   thumbnailAlt: string;
@@ -43,7 +42,6 @@ export const ProductDetails = ({data}: ProductDetailsProps) => {
           site_name: 'First-Project-Next',
         }}
       />
-      <div className="pt-7 px-4 text-gray-500">{data.category}</div>
       <h2 className="px-4 pb-4 text-xl font-bold">{data.title}</h2>
       <div className="bg-white p-8">
         <Image
@@ -63,13 +61,11 @@ export const ProductDetails = ({data}: ProductDetailsProps) => {
           {data.longDescription}
         </AaquReactMarkdown>
       </article>
-
-
     </>
   );
 };
 
-type ProductListItem = Pick<Product, "id" | "title" | "price" | "category" | "thumbnailUrl" | "thumbnailAlt">;
+type ProductListItem = Pick<Product, "id" | "title" | "price" | "thumbnailUrl" | "thumbnailAlt">;
 
 interface ProductListItemProps {
   data: ProductListItem;
@@ -96,7 +92,6 @@ export const ProductListItem = ({data}: ProductListItemProps) => {
           {data.price}$
         </div>
 
-        <div className="pt-4 px-4 text-gray-500">{data.category}</div>
         <div className="p-4">
           <h3 className="pb-4 text-lg h-24">{data.title}</h3>
           <button

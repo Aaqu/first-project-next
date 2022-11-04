@@ -3,6 +3,12 @@ import {ProductDetails} from "../../components/Product";
 import Link from "next/link";
 import {serialize} from "next-mdx-remote/serialize";
 import {InferGetStaticPaths} from "../../types";
+import {apolloClient} from "../../graphql/apolloClient";
+import {
+  GetProductDetailsByIdDocument,
+  GetProductDetailsByIdQuery, GetProductDetailsByIdQueryVariables,
+  GetProductsIdsDocument, GetProductsIdsQuery
+} from "../../generated/graphql";
 
 export default function ProductIdPAge({data}: InferGetStaticPropsType<typeof getStaticProps>) {
   if (!data) {
@@ -16,13 +22,12 @@ export default function ProductIdPAge({data}: InferGetStaticPropsType<typeof get
       </Link>
       <ProductDetails data={{
         id: data.id,
-        title: data.title,
+        title: data.name,
         price: data.price,
-        category: data.category,
         description: data.description,
-        thumbnailUrl: data.image,
-        thumbnailAlt: data.title,
-        rating: data.rating.rate,
+        thumbnailUrl: data.images[0].url,
+        thumbnailAlt: data.name,
+        rating: 5,
         longDescription: data.longDescription,
       }}/>
     </>
@@ -31,14 +36,15 @@ export default function ProductIdPAge({data}: InferGetStaticPropsType<typeof get
 };
 
 export const getStaticPaths = async () => {
-  const res = await fetch(`https://naszsklep-api.vercel.app/api/products/`);
-  const data: StoreApiResponse[] = await res.json();
+  const {data} = await apolloClient.query<GetProductsIdsQuery>({
+    query: GetProductsIdsDocument,
+  });
 
   return {
-    paths: data.map((product) => {
+    paths: data.products.map((product) => {
       return {
         params: {
-          productId: product.id.toString(),
+          productId: product.id,
         }
       }
     }),
@@ -54,10 +60,15 @@ export const getStaticProps = async ({params}: InferGetStaticPaths<typeof getSta
     }
   }
 
-  const res = await fetch(`https://naszsklep-api.vercel.app/api/products/${params.productId}`);
-  const data: StoreApiResponse | null = await res.json();
+  const {data} = await apolloClient.query<GetProductDetailsByIdQuery, GetProductDetailsByIdQueryVariables>({
+    variables: {
+      id: params.productId
+    },
+    query: GetProductDetailsByIdDocument,
+  });
 
-  if (!data) {
+
+  if (!data.product) {
     return {
       props: {},
       notFound: true,
@@ -67,24 +78,9 @@ export const getStaticProps = async ({params}: InferGetStaticPaths<typeof getSta
   return {
     props: {
       data: {
-        ...data,
-        longDescription: await serialize(data.longDescription),
+        ...data.product,
+        longDescription: await serialize(data.product.description),
       }
     },
   };
 };
-
-export interface StoreApiResponse {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  },
-  longDescription: string;
-}
-

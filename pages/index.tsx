@@ -1,38 +1,22 @@
-import { ProductListItem} from "../components/Product";
+import {apolloClient} from "../graphql/apolloClient";
+import {ProductListItem} from "../components/Product";
+import {GetProductListDocument, GetProductListQuery} from "../generated/graphql";
 import {InferGetStaticPropsType} from "next";
 
-export default function Home({dataNew, dataSale}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home({data}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <h1 className="font-bold text-2xl pt-12 pb-3">NEW!</h1>
       <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-        {dataNew.map(product => {
+        {data.products.map(product => {
           return <li key={product.id} className="shadow-xl border-2">
             <ProductListItem
               data={{
                 id: product.id,
-                title: product.title,
+                title: product.name,
                 price: product.price,
-                category: product.category,
-                thumbnailUrl: product.image,
-                thumbnailAlt: product.title,
-              }}
-            />
-          </li>
-        })}
-      </ul>
-      <h1 className="font-bold text-2xl pt-16 pb-3">SALE!</h1>
-      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-        {dataSale.map(product => {
-          return <li key={product.id} className="shadow-xl border-2">
-            <ProductListItem
-              data={{
-                id: product.id,
-                title: product.title,
-                price: product.price,
-                category: product.category,
-                thumbnailUrl: product.image,
-                thumbnailAlt: product.title,
+                thumbnailUrl: product.images[0].url,
+                thumbnailAlt: product.name,
               }}
             />
           </li>
@@ -43,29 +27,13 @@ export default function Home({dataNew, dataSale}: InferGetStaticPropsType<typeof
 }
 
 export const getStaticProps = async () => {
-  const resNew = await fetch(`https://naszsklep-api.vercel.app/api/products?take=5&offset=0 `);
-  const dataNew: StoreApiResponse[] = await resNew.json();
-
-  const resSale = await fetch(`https://naszsklep-api.vercel.app/api/products?take=5&offset=50 `);
-  const dataSale: StoreApiResponse[] = await resSale.json();
+  const {data} = await apolloClient.query<GetProductListQuery>({
+    query: GetProductListDocument,
+  });
 
   return {
     props: {
-      dataNew,
-      dataSale,
+      data,
     },
   };
 };
-
-export interface StoreApiResponse {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  }
-}
