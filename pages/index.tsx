@@ -2,8 +2,13 @@ import {apolloClient} from "../graphql/apolloClient";
 import {ProductListItem} from "../components/Product";
 import {GetProductListDocument, GetProductListQuery} from "../generated/graphql";
 import {InferGetStaticPropsType} from "next";
+import {add} from "unload";
 
 export default function Home({data}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const addReview = () => {
+    console.log("add"); // 5:07
+  }
+
   return (
     <>
       <h1 className="font-bold text-2xl pt-12 pb-3">NEW!</h1>
@@ -22,6 +27,7 @@ export default function Home({data}: InferGetStaticPropsType<typeof getStaticPro
           </li>
         })}
       </ul>
+      <button type="button" onClick={addReview}>Dodaj komentarz</button>
     </>
   )
 }
