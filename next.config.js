@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  trailingSlash: true,
+  //trailingSlash: true,
 
   images: {
     domains: ["naszsklep-api.vercel.app", "github.com", "picsum.photos", "media.graphassets.com"],

@@ -10682,6 +10682,13 @@ export type GetProductDetailsByIdQueryVariables = Exact<{
 
 export type GetProductDetailsByIdQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name: string, price: number, description: string, images: Array<{ __typename?: 'Asset', url: string }> } | null };
 
+export type GetProductByIdForStripeQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type GetProductByIdForStripeQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, slug: string, name: string, price: number, images: Array<{ __typename?: 'Asset', url: string }> } | null };
+
 
 export const CreateProductReviewDocument = gql`
     mutation CreateProductReview($review: ReviewCreateInput!) {
@@ -10832,3 +10839,44 @@ export function useGetProductDetailsByIdLazyQuery(baseOptions?: Apollo.LazyQuery
 export type GetProductDetailsByIdQueryHookResult = ReturnType<typeof useGetProductDetailsByIdQuery>;
 export type GetProductDetailsByIdLazyQueryHookResult = ReturnType<typeof useGetProductDetailsByIdLazyQuery>;
 export type GetProductDetailsByIdQueryResult = Apollo.QueryResult<GetProductDetailsByIdQuery, GetProductDetailsByIdQueryVariables>;
+export const GetProductByIdForStripeDocument = gql`
+    query GetProductByIdForStripe($id: ID) {
+  product(where: {id: $id}) {
+    id
+    slug
+    name
+    price
+    images {
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProductByIdForStripeQuery__
+ *
+ * To run a query within a React component, call `useGetProductByIdForStripeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductByIdForStripeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductByIdForStripeQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetProductByIdForStripeQuery(baseOptions?: Apollo.QueryHookOptions<GetProductByIdForStripeQuery, GetProductByIdForStripeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductByIdForStripeQuery, GetProductByIdForStripeQueryVariables>(GetProductByIdForStripeDocument, options);
+      }
+export function useGetProductByIdForStripeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductByIdForStripeQuery, GetProductByIdForStripeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductByIdForStripeQuery, GetProductByIdForStripeQueryVariables>(GetProductByIdForStripeDocument, options);
+        }
+export type GetProductByIdForStripeQueryHookResult = ReturnType<typeof useGetProductByIdForStripeQuery>;
+export type GetProductByIdForStripeLazyQueryHookResult = ReturnType<typeof useGetProductByIdForStripeLazyQuery>;
+export type GetProductByIdForStripeQueryResult = Apollo.QueryResult<GetProductByIdForStripeQuery, GetProductByIdForStripeQueryVariables>;

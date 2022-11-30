@@ -27,3 +27,15 @@ query GetProductDetailsById($id: ID) {
         }
     }
 }
+
+query GetProductByIdForStripe($id: ID) {
+    product(where: {id: $id}) {
+        id
+    		slug
+        name
+        price
+        images {
+            url
+        }
+    }
+}
