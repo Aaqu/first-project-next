@@ -1,6 +1,6 @@
 import Link from "next/link";
 import {useRouter} from "next/router";
-
+import {useSession, signIn, signOut} from "next-auth/react";
 import {Disclosure} from '@headlessui/react'
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/solid'
 import Image from "next/image";
@@ -18,6 +18,7 @@ function classNames(...classes: string[]) {
 }
 
 export const Header = () => {
+  const session = useSession();
   const router = useRouter();
 
   return (
@@ -80,33 +81,21 @@ export const Header = () => {
                   )}
                 </Disclosure.Button>
               </div>
+              <div>
+                {
+                  session.status === "authenticated" ? (
+                    <button type="button" onClick={() => signOut()} className="bg-white p-1.5 rounded-lg">Wyloguj</button>
+                  ) : (
+                    <button type="button" onClick={() => signIn()} className="bg-white p-1.5 rounded-lg">Zaloguj</button>
+                  )
+                }
+
+              </div>
               <CartBar />
             </div>
           </div>
 
-          <Disclosure.Panel className="md:hidden">
-            <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  replace
-                >
-                  <a
-                    className={classNames(
-                      router.pathname === item.href
-                        ? 'bg-emerald-900 text-white'
-                        : 'text-white hover:bg-emerald-700 hover:text-white',
-                      'block px-3 py-2 rounded-md text-base font-medium'
-                    )}
-                    aria-current={router.pathname === item.href ? 'page' : undefined}
-                  >
-                    {item.name}
-                  </a>
-                </Link>
-              ))}
-            </div>
-          </Disclosure.Panel>
+
         </>
       )}
     </Disclosure>

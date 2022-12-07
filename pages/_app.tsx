@@ -7,11 +7,13 @@ import {SEO} from '../next-seo.config'
 import {CartStateContextProvider} from "../components/Cart/CartContext";
 import {ApolloProvider} from "@apollo/client";
 import {apolloClient} from "../graphql/apolloClient";
+import { SessionProvider } from "next-auth/react";
 
 const client = new QueryClient();
 
-export default function MyApp({Component, pageProps}: AppProps) {
+export default function MyApp({Component, pageProps: { session, ...pageProps }}: AppProps) {
   return (
+    <SessionProvider session={session} >
     <ApolloProvider client={apolloClient}>
       <CartStateContextProvider>
         <Layout>
@@ -22,6 +24,6 @@ export default function MyApp({Component, pageProps}: AppProps) {
         </Layout>
       </CartStateContextProvider>
     </ApolloProvider>
-
+    </SessionProvider>
   )
 }

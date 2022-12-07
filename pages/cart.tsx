@@ -1,6 +1,7 @@
 import {useCartState} from "../components/Cart/CartContext";
 import {loadStripe} from "@stripe/stripe-js";
 import {Stripe} from "stripe";
+import {useSession, signIn, signOut} from "next-auth/react";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
@@ -31,6 +32,14 @@ const CartContent = () => {
 
     await stripe.redirectToCheckout({ sessionId: session.id })
   }
+
+
+
+  // const session = useSession()
+  //
+  // if(session.status === 'authenticated') {
+  //   session.data
+  // }
 
   return (
     <div className="col-span-2">

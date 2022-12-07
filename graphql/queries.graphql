@@ -39,3 +39,11 @@ query GetProductByIdForStripe($id: ID) {
         }
     }
 }
+
+query GetAccountByEmail($email:String!) {
+  account(where: {email: $email}) {
+    id
+    email
+    password
+  }
+}
